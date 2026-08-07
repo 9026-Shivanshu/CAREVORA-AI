@@ -1,5 +1,5 @@
 const ResumeBuilder = require("../models/resumeBuilder");
-
+const { generateResumeWithAI } = require("../services/ai/aiService");
 // Save Resume
 exports.saveResume = async (req, res) => {
     try {
@@ -139,6 +139,30 @@ exports.deleteResume = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Server Error"
+        });
+
+    }
+
+};
+exports.generateAIResume = async (req, res) => {
+
+    try {
+
+        const aiResume = await generateResumeWithAI(req.body);
+
+        res.status(200).json({
+            success: true,
+            message: "AI Resume Generated Successfully",
+            data: aiResume
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "AI Resume Generation Failed"
         });
 
     }

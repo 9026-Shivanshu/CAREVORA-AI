@@ -1,5 +1,5 @@
 // ============================================
-// AI Career Mentor
+// PATHLY AI
 // Master Resume Database V1
 // ============================================
 
@@ -261,7 +261,7 @@ courses:[
     projects:[
 
         "E-Commerce Website",
-        "AI Career Mentor",
+        "PATHLY AI",
         "Blog Website",
         "Student Management System"
 
@@ -369,7 +369,7 @@ courses:[
         "Library Management System",
         "Bank Management System",
         "Hospital Management System",
-        "AI Career Mentor"
+        "PATHLY AI"
 
     ],
 

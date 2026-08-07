@@ -5,7 +5,7 @@ const mammoth = require("mammoth");
 const Resume = require("../models/Resume");
 // ==========================================
 // Resume Controller
-// AI Career Mentor
+// PATHLY AI
 // ==========================================
 
 exports.uploadResume = async (req, res) => {

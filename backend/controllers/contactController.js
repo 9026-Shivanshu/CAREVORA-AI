@@ -41,18 +41,18 @@ await sendEmail({
 // Thank You Email to User
 await sendEmail({
   to: email,
-  subject: "✅ Thank You for Contacting AI Career Mentor",
+  subject: "✅ Thank You for Contacting PATHLY AI",
   html: `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;border:1px solid #ddd;border-radius:10px;">
       
       <h2 style="color:#2563eb;text-align:center;">
-        AI Career Mentor
+        PATHLY AI
       </h2>
 
       <p>Dear <strong>${fullName}</strong>,</p>
 
       <p>
-        Thank you for contacting <strong>AI Career Mentor</strong>.
+        Thank you for contacting <strong>PATHLY AI</strong>.
       </p>
 
       <p>
@@ -78,10 +78,11 @@ await sendEmail({
 
       <p>
         Regards,<br>
-        <strong>AI Career Mentor Team</strong>
+        <strong>PATHLY AI Team</strong>
       </p>
 
       <hr>
+    
 
       <p style="font-size:12px;color:#777;text-align:center;">
         This is an automated email. Please do not reply directly to this message.

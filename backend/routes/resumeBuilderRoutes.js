@@ -5,19 +5,15 @@ const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");
 
 const {
-
     saveResume,
-
     getResumes,
-
     getResumeById,
-
     updateResume,
-
-    deleteResume
-
+    deleteResume,
+    generateAIResume
 } = require("../controllers/resumeBuilderController");
-
+// Generate Resume with AI
+router.post("/generate-ai", authMiddleware, generateAIResume);
 // Save Resume
 router.post("/save", authMiddleware, saveResume);
 

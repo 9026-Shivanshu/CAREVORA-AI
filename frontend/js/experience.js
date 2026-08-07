@@ -6,7 +6,7 @@ ResumeBuilder.addExperience = function () {
 
     if (!container) return;
 
-    const experienceHTML = `
+    const html = `
 
     <div class="experience-item">
 
@@ -16,14 +16,18 @@ ResumeBuilder.addExperience = function () {
             ✖ Remove
         </button>
 
+        <h3 class="experience-title"></h3>
+
         <div class="grid-2">
 
             <div class="form-group">
                 <label>Job Title</label>
-                <input
-                    type="text"
-                    class="jobTitle"
-                    placeholder="Example: Web Developer">
+                <input type="text" class="jobTitle">
+            </div>
+
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" class="companyName">
             </div>
 
             <div class="form-group">
@@ -34,65 +38,34 @@ ResumeBuilder.addExperience = function () {
                     <option>Part Time</option>
                     <option>Internship</option>
                     <option>Freelance</option>
-                    <option>Contract</option>
                 </select>
 
             </div>
 
             <div class="form-group">
-                <label>Company</label>
-                <input
-                    type="text"
-                    class="companyName"
-                    placeholder="Company Name">
-            </div>
-
-            <div class="form-group">
                 <label>Location</label>
-                <input
-                    type="text"
-                    class="companyLocation"
-                    placeholder="City, State">
+                <input type="text" class="jobLocation">
             </div>
 
             <div class="form-group">
                 <label>Start Date</label>
-                <input
-                    type="month"
-                    class="startDate">
+                <input type="month" class="startDate">
             </div>
 
             <div class="form-group">
                 <label>End Date</label>
-                <input
-                    type="month"
-                    class="endDate">
+                <input type="month" class="endDate">
             </div>
 
         </div>
 
         <div class="form-group">
 
-            <label>
-
-                <input
-                    type="checkbox"
-                    class="currentJob">
-
-                Currently Working Here
-
-            </label>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>Responsibilities</label>
+            <label>Description</label>
 
             <textarea
-                rows="5"
                 class="jobDescription"
-                placeholder="Describe your responsibilities..."></textarea>
+                rows="4"></textarea>
 
         </div>
 
@@ -100,43 +73,44 @@ ResumeBuilder.addExperience = function () {
 
     `;
 
-    container.insertAdjacentHTML("beforeend", experienceHTML);
+    container.insertAdjacentHTML("beforeend", html);
+
+    this.updateExperienceNumbers();
 
     container.querySelectorAll(".remove-btn").forEach(button => {
 
-        button.onclick = function () {
+        button.onclick = () => {
 
-            this.closest(".experience-item").remove();
+            this.removeItem(
+                button,
+                ".experience-item",
+                ".experience-title",
+                "Experience",
+                this.updateExperiencePreview
+            );
 
-            ResumeBuilder.updateExperienceNumbers();
+            this.updateExperienceNumbers();
 
         };
 
     });
 
-    this.updateExperienceNumbers();
+    this.updateExperiencePreview();
 
 };
 
 ResumeBuilder.updateExperienceNumbers = function () {
 
-    const cards = this.elements.experienceContainer.querySelectorAll(".experience-item");
+    const cards =
+        this.elements.experienceContainer.querySelectorAll(".experience-item");
 
     cards.forEach((card, index) => {
 
-        let title = card.querySelector(".experience-title");
+        let title =
+            card.querySelector(".experience-title");
 
-        if (!title) {
-
-            title = document.createElement("h3");
-
-            title.className = "experience-title";
-
-            card.prepend(title);
-
-        }
-
-        title.textContent = `Experience #${index + 1}`;
+        title.textContent =
+            `Experience #${index + 1}`;
 
     });
 

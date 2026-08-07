@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async ({ to, subject, html }) => {
   try {
     await transporter.sendMail({
-      from: `"AI Career Mentor" <${process.env.EMAIL_USER}>`,
+      from: `"PATHLY AI" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html,

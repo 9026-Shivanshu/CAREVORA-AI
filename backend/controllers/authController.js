@@ -58,7 +58,48 @@ if (!isStrongPassword(password)) {
       branch,
       graduationYear,
     });
+const html = `
+<div style="font-family:Arial,sans-serif;padding:20px">
+  <h2 style="color:#2563eb;">🎉 Welcome to PATHLY AI </h2>
 
+  <p>Hello <b>${newUser.fullName}</b>,</p>
+
+  <p>Your account has been created successfully.</p>
+
+  <table cellpadding="8" style="border-collapse:collapse;">
+    <tr>
+      <td><b>Name</b></td>
+      <td>${newUser.fullName}</td>
+    </tr>
+    <tr>
+      <td><b>Email</b></td>
+      <td>${newUser.email}</td>
+    </tr>
+  </table>
+
+  <p>You can now login and start using PATHLY AI.</p>
+
+  <p>
+    ✔ Resume Analyzer<br>
+    ✔ ATS Score<br>
+    ✔ AI Career Guidance<br>
+    ✔ Mock Interview
+  </p>
+
+  <hr>
+
+  <p style="color:gray">
+    Regards,<br>
+    PATHLY AI Team
+  </p>
+</div>
+`;
+
+await sendEmail({
+  to: newUser.email,
+  subject: "🎉 Welcome to PATHLY AI",
+  html,
+});
     res.status(201).json({
       success: true,
       message: "Registration Successful",
@@ -151,7 +192,7 @@ exports.forgotPassword = async (req, res) => {
     await user.save();
 
     const html = `
-      <h2>AI Career Mentor</h2>
+      <h2>PATHLY AI</h2>
 
       <p>Your OTP for password reset is:</p>
 

@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <title>Super Admin Panel | PATHLY AI</title>
+
+    <link rel="stylesheet" href="../assets/css/admin.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            <h2>PATHLY AI</h2>
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="#" id="dashboardMenu">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="active">
+                <i class="fa-solid fa-user-shield"></i>
+                Admin Management
+            </li>
+<li id="permissionMenu">
+    <i class="fa-solid fa-user-lock"></i>
+    Permission Management
+</li>
+            <li>
+                <i class="fa-solid fa-users"></i>
+                Students
+            </li>
+
+            <li>
+                <i class="fa-solid fa-building"></i>
+                Recruiters
+            </li>
+
+            <li>
+                <i class="fa-solid fa-briefcase"></i>
+                Jobs
+            </li>
+
+            <li>
+                <i class="fa-solid fa-chart-column"></i>
+                Reports
+            </li>
+
+            <li>
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="main-content">
+
+      <header class="top-navbar">
+
+    <div class="nav-left">
+
+        <h2>PATHLY AI</h2>
+
+    </div>
+
+    <div class="nav-center">
+
+       <input
+    type="text"
+    id="dashboardSearch"
+    class="search-box"
+    placeholder="Search anything...">
+    </div>
+
+       <div class="nav-right">
+
+   <div class="notification-wrapper">
+
+    <button class="icon-btn" id="notificationBtn">
+        <i class="fa-solid fa-bell"></i>
+    </button>
+
+    <div id="notificationPanel" class="notification-panel">
+
+        <h4>Notifications</h4>
+
+        <div id="notificationList">
+
+            <p>No Notifications</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <button class="icon-btn">
+        <i class="fa-solid fa-envelope"></i>
+    </button>
+
+    <div class="profile-wrapper">
+
+    <div class="profile-box" id="profileBtn">
+
+        <i class="fa-solid fa-circle-user"></i>
+
+        <span id="adminName">Super Admin</span>
+
+        <i class="fa-solid fa-chevron-down"></i>
+
+    </div>
+
+    <div class="profile-dropdown" id="profileDropdown">
+
+      <a href="#" id="profileLink">My Profile</a>
+
+<a href="#" id="changePasswordLink">Change Password</a>
+
+        <hr>
+
+        <a href="#" id="logoutDropdown">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+
+    </div>
+
+</div>
+    <button id="logoutBtn" class="logout-btn" title="Logout">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+    </button>
+
+</div>
+</header>
+<div id="dashboardContent">
+           <section class="page-header">
+<div>
+
+    <h1 id="dashboardGreeting"></h1>
+
+    <p id="dashboardDescription"></p>
+
+</div>
+
+</section>
+<section class="quick-actions">
+
+    <button id="createAdminBtn" class="primary-btn">
+        <i class="fas fa-user-plus"></i>
+        Create Admin
+    </button>
+
+    <button id="reportsBtn" class="secondary-btn">
+        <i class="fas fa-chart-line"></i>
+        Reports
+    </button>
+
+    <button id="settingsBtn" class="secondary-btn">
+        <i class="fas fa-cog"></i>
+        Settings
+    </button>
+
+</section>
+        
+
+       <!-- ==========================
+ Dashboard Cards
+=========================== -->
+
+<section class="stats-cards">
+
+    <div class="stat-card users-card">
+
+      <div class="stat-info">
+
+            <h4>Total Students</h4>
+
+            <h2 id="totalUsers">0</h2>
+
+            <p>Registered Students</p>
+
+        </div>
+
+        <i class="fa-solid fa-user-graduate"></i>
+
+    </div>
+
+    <div class="stat-card users-card">
+
+       <div class="stat-info">
+
+            <h4>Total Admins</h4>
+
+            <h2 id="totalAdmins">0</h2>
+
+            <p>System Administrators</p>
+
+        </div>
+
+        <i class="fa-solid fa-user-shield"></i>
+
+    </div>
+
+    <div class="stat-card users-card">
+
+       <div class="stat-info">
+
+            <h4>Total Resumes</h4>
+
+            <h2 id="totalResumes">0</h2>
+
+            <p>Uploaded Resumes</p>
+
+        </div>
+
+        <i class="fa-solid fa-file-lines"></i>
+
+    </div>
+
+    <div class="stat-card users-card">
+
+       <div class="stat-info">
+
+            <h4>Total Interviews</h4>
+
+            <h2 id="totalInterviews">0</h2>
+
+            <p>Mock Interviews</p>
+
+        </div>
+
+        <i class="fa-solid fa-briefcase"></i>
+
+    </div>
+
+</section>
+
+<!-- ===================================
+ Dashboard Charts + Recent Activity
+==================================== -->
+
+<section class="dashboard-row">
+
+    <!-- Charts -->
+
+    <div class="chart-box">
+
+        <div class="box-header">
+
+            <h3>Monthly Overview</h3>
+
+        </div>
+
+        <canvas id="dashboardChart"></canvas>
+
+    </div>
+
+    <!-- Recent Activity -->
+
+    <div class="activity-box">
+
+        <div class="box-header">
+
+            <h3>Recent Activity</h3>
+
+        </div>
+
+        <div id="recentActivity">
+
+            <p>No Activity Found</p>
+
+        </div>
+
+    </div>
+
+</section>
+</div>
+<!-- ========================================= -->
+<!-- SYSTEM ADMINISTRATORS -->
+<!-- ========================================= -->
+
+<section class="admin-list-section">
+
+    <div class="box-header">
+
+        <h2>System Administrators</h2>
+<p class="section-desc">
+Manage all system administrators from one place.
+</p>
+        <div class="search-box-wrapper">
+
+            <input
+                type="text"
+                id="searchAdmin"
+                placeholder="Search Admin by Name or Email">
+
+            <button id="searchBtn">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Stats -->
+
+    <div class="admin-summary">
+
+        <div class="summary-card">
+
+            <h4>Total Admins</h4>
+
+            <h2 id="totalAdmins">0</h2>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h4>Active</h4>
+
+            <h2 id="activeAdmins">0</h2>
+
+        </div>
+
+        <div class="summary-card">
+
+            <h4>Inactive</h4>
+
+            <h2 id="inactiveAdmins">0</h2>
+
+        </div>
+
+    </div>
+
+    <!-- Table -->
+
+    <div class="table-wrapper">
+
+        <table class="admin-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Email</th>
+
+                    <th>Status</th>
+
+                    <th>Role</th>
+
+                    <th>Last Login</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="adminTableBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+<!-- =========================
+     MY PROFILE SECTION
+========================= -->
+
+<section id="profileSection" style="display:none;">
+
+    <div class="profile-card">
+<div class="profile-header-card">
+
+    <div class="profile-avatar">
+
+        <img
+            id="profilePreview"
+          src="https://ui-avatars.com/api/?name=Super+Admin&background=2563eb&color=fff&size=200"
+            alt="Profile">
+
+        <input
+            type="file"
+            id="profilePhoto"
+            accept="image/*"
+            hidden>
+
+        <button
+            id="changePhotoBtn"
+            class="change-photo-btn">
+
+            <i class="fa-solid fa-camera"></i>
+            Change Photo
+
+        </button>
+
+    </div>
+
+    <div class="profile-title">
+
+        <h2 id="profileName">
+
+            Super Admin
+
+        </h2>
+
+        <p>
+
+           PATHLY AI System Administrator
+
+        </p>
+
+        <span class="status-badge">
+
+            🟢 Active
+
+        </span>
+
+    </div>
+
+</div>
+       
+
+        <div class="profile-right">
+
+            <h2>My Profile</h2>
+
+            <div class="profile-grid">
+
+                <div>
+                    <label>Full Name</label>
+                    <input type="text" id="fullName">
+                </div>
+
+                <div>
+                    <label>Email</label>
+                    <input type="email" id="email" readonly>
+                </div>
+
+                <div>
+                    <label>Phone</label>
+                    <input type="text" id="phone">
+                </div>
+
+                <div>
+                    <label>Department</label>
+                    <input type="text" id="department">
+                </div>
+
+                <div>
+                    <label>Role</label>
+                    <input type="text" value="Super Admin" readonly>
+                </div>
+
+                <div>
+                    <label>Status</label>
+                    <input type="text" value="Active" readonly>
+                </div>
+<div>
+
+    <label>Created Date</label>
+
+    <input
+        type="text"
+        id="createdDate"
+        readonly>
+
+</div>
+
+<div>
+
+    <label>Last Login</label>
+
+    <input
+        type="text"
+        id="lastLogin"
+        readonly>
+
+</div>
+            </div>
+
+            <div class="profile-actions">
+
+    <button
+        id="editProfileBtn"
+        class="primary-btn">
+
+        <i class="fa-solid fa-pen"></i>
+        Edit Profile
+
+    </button>
+
+    <button
+        id="saveProfileBtn"
+        class="primary-btn">
+
+        <i class="fa-solid fa-floppy-disk"></i>
+        Save Changes
+
+    </button>
+
+    <button
+        id="cancelProfileBtn"
+        class="secondary-btn">
+
+        <i class="fa-solid fa-xmark"></i>
+        Cancel
+
+    </button>
+
+</div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================== -->
+<!-- Change Password Section -->
+<!-- ===================================== -->
+
+<section id="changePasswordSection" class="profile-section" style="display:none;">
+
+    <div class="profile-card">
+
+        <h2>Change Password</h2>
+        <p>Update your account password securely.</p>
+
+        <div class="profile-grid">
+
+            <!-- Current Password -->
+            <div>
+
+                <label>Current Password</label>
+
+                <div class="password-field">
+
+                    <input
+                        type="password"
+                        id="currentPassword"
+                        placeholder="Enter Current Password">
+
+                    <i
+                        class="fa-solid fa-eye toggle-password"
+                        data-target="currentPassword"></i>
+
+                </div>
+
+            </div>
+
+            <!-- New Password -->
+            <div>
+
+                <label>New Password</label>
+
+                <div class="password-field">
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        placeholder="Enter New Password">
+
+                    <i
+                        class="fa-solid fa-eye toggle-password"
+                        data-target="newPassword"></i>
+
+                </div>
+
+                <div class="password-strength">
+
+                    <div
+                        id="strengthBar"
+                        class="strength-bar">
+                    </div>
+
+                    <small id="strengthText">
+                        Password Strength
+                    </small>
+
+                </div>
+
+                <ul class="password-rules">
+
+                    <li id="ruleLength">
+                        ❌ Minimum 8 Characters
+                    </li>
+
+                    <li id="ruleUpper">
+                        ❌ One Uppercase Letter
+                    </li>
+
+                    <li id="ruleNumber">
+                        ❌ One Number
+                    </li>
+
+                    <li id="ruleSpecial">
+                        ❌ One Special Character
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+
+                <label>Confirm Password</label>
+
+                <div class="password-field">
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Confirm Password">
+
+                    <i
+                        class="fa-solid fa-eye toggle-password"
+                        data-target="confirmPassword"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <button
+                id="updatePasswordBtn"
+                class="primary-btn">
+
+                <i class="fa-solid fa-key"></i>
+
+                Update Password
+
+            </button>
+
+            <button
+                id="cancelPasswordBtn"
+                class="secondary-btn">
+
+                <i class="fa-solid fa-xmark"></i>
+
+                Cancel
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ===================================== -->
+<!-- CREATE ADMIN MODAL -->
+<!-- ===================================== -->
+
+<div id="createAdminModal" class="modal" style="display:none;">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Create New Admin</h2>
+
+            <span id="closeCreateAdminModal" class="close">&times;</span>
+
+        </div>
+
+        <form id="createAdminForm">
+            <div class="form-row">
+
+    <div class="form-group">
+        <label>Full Name</label>
+        <input
+            type="text"
+            id="adminFullName"
+            placeholder="Enter Full Name"
+            required>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input
+            type="email"
+            id="adminEmail"
+            placeholder="Enter Email Address"
+            required>
+    </div>
+
+</div>
+
+<div class="form-row">
+
+    <div class="form-group">
+        <label>Phone</label>
+        <input
+            type="text"
+            id="adminPhone"
+            placeholder="Enter Phone Number"
+            required>
+    </div>
+
+    <div class="form-group">
+        <label>Department</label>
+
+        <select id="adminDepartment" required>
+
+            <option value="">Select Department</option>
+
+            <option>Administration</option>
+            <option>Training</option>
+            <option>Placement</option>
+            <option>Support</option>
+            <option>Technical</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<div class="form-row">
+
+    <div class="form-group">
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="adminPassword"
+            placeholder="Enter Password"
+            required>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Confirm Password</label>
+
+        <input
+            type="password"
+            id="adminConfirmPassword"
+            placeholder="Confirm Password"
+            required>
+
+    </div>
+
+</div>
+
+<div class="modal-footer">
+
+    <button
+        type="button"
+        id="cancelCreateAdminBtn"
+        class="secondary-btn">
+
+        Cancel
+
+    </button>
+
+    <button
+        type="submit"
+        class="primary-btn">
+
+        Create Admin
+
+    </button>
+
+</div>
+
+        </form>
+
+    </div>
+
+</div>
+<!-- ===================================== -->
+<!-- EDIT ADMIN MODAL -->
+<!-- ===================================== -->
+
+<div id="editAdminModal" class="modal" style="display:none;">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Edit Admin</h2>
+
+            <span id="closeEditModal" class="close">&times;</span>
+
+        </div>
+
+        <form id="editAdminForm">
+
+            <input type="hidden" id="editAdminId">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="editFullName"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="editEmail"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Role</label>
+
+                <select id="editRole">
+
+                    <option value="admin">Admin</option>
+
+                    <option value="superadmin">Super Admin</option>
+
+                </select>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    id="cancelEditBtn"
+                    class="secondary-btn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    Update Admin
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<!-- ===================================== -->
+<!-- VIEW ADMIN MODAL -->
+<!-- ===================================== -->
+
+<div id="viewAdminModal" class="modal" style="display:none;">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Admin Details</h2>
+
+            <span id="closeViewModal" class="close">&times;</span>
+
+        </div>
+
+       <div class="view-admin-grid">
+
+    <div class="view-card">
+        <label>Full Name</label>
+        <p id="viewFullName"></p>
+    </div>
+
+    <div class="view-card">
+        <label>Email</label>
+        <p id="viewEmail"></p>
+    </div>
+
+    <div class="view-card">
+        <label>Role</label>
+        <p id="viewRole"></p>
+    </div>
+
+    <div class="view-card">
+        <label>Status</label>
+        <p id="viewStatus"></p>
+    </div>
+
+    <div class="view-card">
+        <label>Last Login</label>
+        <p id="viewLastLogin"></p>
+    </div>
+
+</div>
+
+<div class="view-footer">
+
+    <button
+        id="closeViewBtn"
+        class="secondary-btn"
+        type="button">
+
+        Close
+
+    </button>
+
+</div>
+
+    </div>
+
+</div>
+<!-- ===================================== -->
+<!-- DELETE ADMIN MODAL -->
+<!-- ===================================== -->
+
+<div id="deleteAdminModal" class="modal" style="display:none;">
+
+    <div class="modal-content small-modal">
+
+        <div class="modal-header">
+
+            <h2>Delete Admin</h2>
+
+            <span id="closeDeleteModal" class="close">&times;</span>
+
+        </div>
+
+        <input type="hidden" id="deleteAdminId">
+
+        <div class="delete-content">
+
+            <i class="fa-solid fa-triangle-exclamation delete-icon"></i>
+
+            <p>
+                Are you sure you want to delete this admin?
+            </p>
+
+            <small>
+                This action cannot be undone.
+            </small>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                id="cancelDeleteBtn"
+                class="secondary-btn">
+
+                Cancel
+
+            </button>
+
+            <button
+                type="button"
+                id="confirmDeleteBtn"
+                class="danger-btn">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ===================================== -->
+<!-- RESET PASSWORD MODAL -->
+<!-- ===================================== -->
+
+<div id="resetPasswordModal" class="modal" style="display:none;">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>Reset Password</h2>
+
+            <span id="closeResetModal" class="close">&times;</span>
+
+        </div>
+
+        <form id="resetPasswordForm">
+
+            <input type="hidden" id="resetAdminId">
+
+            <div class="form-group">
+
+                <label>New Password</label>
+
+                <div class="password-wrapper">
+<input
+    type="password"
+    id="resetNewPassword"
+    placeholder="Enter New Password"
+    required>
+
+   <i
+class="fa-solid fa-eye toggle-password"
+data-target="resetNewPassword"></i>
+</i>
+</div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Confirm Password</label>
+
+              <div class="password-wrapper">
+
+   <input
+    type="password"
+    id="resetConfirmPassword"
+    placeholder="Confirm Password"
+    required>
+
+   <i
+class="fa-solid fa-eye toggle-password"
+data-target="resetConfirmPassword">
+</i>
+
+</div>
+            </div>
+<div id="passwordStrength" class="password-strength"></div>
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    id="cancelResetBtn"
+                    class="secondary-btn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    Reset Password
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<!-- ===================================== -->
+<!-- PERMISSION MANAGEMENT SECTION -->
+<!-- ===================================== -->
+
+<section id="permissionSection" style="display:none;">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Permission Management</h1>
+            <p>Manage role based permissions for PATHLY AI.</p>
+        </div>
+
+    </div>
+
+    <div class="profile-card">
+
+        <div class="box-header">
+
+            <h2>Role Permissions</h2>
+<div class="permission-admin-select">
+
+    <label for="permissionAdmin">
+        Select Admin
+    </label>
+
+    <select id="permissionAdmin">
+
+        <option value="">
+            -- Select Admin --
+        </option>
+
+    </select>
+
+</div>
+            <button
+                id="savePermissionsBtn"
+                class="primary-btn">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+
+                Save Permissions
+
+            </button>
+
+        </div>
+
+        <table class="admin-table">
+
+            <thead>
+
+                <tr>
+
+                   <th>Module</th>
+<th>View</th>
+<th>Create</th>
+<th>Edit</th>
+<th>Delete</th>
+<th>Export</th>
+<th>Import</th>
+<th>Approve</th>
+<th>Reject</th>
+<th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="permissionTableBody">
+
+               <tr>
+    <td>Dashboard</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox" checked></td>
+</tr>
+
+<tr>
+    <td>Admin Management</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox" checked></td>
+</tr>
+
+<tr>
+    <td>Students</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox" checked></td>
+</tr>
+
+<tr>
+    <td>Recruiters</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox" checked></td>
+</tr>
+
+<tr>
+    <td>Jobs</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox" checked></td>
+</tr>
+
+<tr>
+    <td>Reports</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox" checked></td>
+</tr>
+
+<tr>
+    <td>Settings</td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox"></td>
+    <td><input type="checkbox" checked></td>
+</tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+</main>
+
+   </div>   
+   
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="../assets/js/alert.js"></script>
+
+<script src="../assets/js/dashboard.js"></script>
+<script src="../assets/js/admins.js"></script>
+</body>
+</html>

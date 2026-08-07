@@ -1,5 +1,5 @@
 /* =====================================================
-   AI Career Mentor
+   PATHLY AI
    Resume Builder
    resume.js
 ===================================================== */
@@ -10,7 +10,7 @@
    Global Object
 ===================================================== */
 
-const ResumeBuilder = {
+window.ResumeBuilder = {
 
     elements: {},
 
@@ -49,6 +49,7 @@ const ResumeBuilder = {
             addLanguageBtn: document.getElementById("addLanguageBtn"),
 
             previewResumeBtn: document.getElementById("previewResumeBtn"),
+            generateResumeBtn: document.getElementById("generateResumeBtn"),
             saveDraftBtn: document.getElementById("saveDraftBtn"),
             clearDraftBtn: document.getElementById("clearDraftBtn"),
             downloadPdfBtn: document.getElementById("downloadPdfBtn"),
@@ -112,6 +113,12 @@ const ResumeBuilder = {
                 () => this.previewResume()
             );
         }
+        if (this.elements.generateResumeBtn) {
+    this.elements.generateResumeBtn.addEventListener(
+        "click",
+        () => this.generateResume()
+    );
+}
 
         if (this.elements.saveDraftBtn) {
             this.elements.saveDraftBtn.addEventListener(
@@ -801,8 +808,120 @@ updateSkillNumbers() {
 
     });
 
-},addExperience() {},
+},addExperience() {
 
+    const container = this.elements.experienceContainer;
+
+    if (!container) return;
+
+    const html = `
+
+    <div class="experience-item">
+
+        <button
+            type="button"
+            class="remove-btn">
+
+            ✖ Remove
+
+        </button>
+
+        <div class="grid-2">
+
+            <div class="form-group">
+                <label>Job Title</label>
+                <input
+                    type="text"
+                    class="jobTitle"
+                    placeholder="Software Engineer">
+            </div>
+
+            <div class="form-group">
+                <label>Company Name</label>
+                <input
+                    type="text"
+                    class="companyName"
+                    placeholder="ABC Pvt Ltd">
+            </div>
+
+            <div class="form-group">
+                <label>Start Date</label>
+                <input
+                    type="month"
+                    class="startDate">
+            </div>
+
+            <div class="form-group">
+                <label>End Date</label>
+                <input
+                    type="month"
+                    class="endDate">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Job Description</label>
+
+            <textarea
+                class="jobDescription"
+                rows="4"
+                placeholder="Describe your responsibilities..."></textarea>
+
+        </div>
+
+    </div>
+
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+
+    container.querySelectorAll(".remove-btn").forEach(button => {
+
+        button.onclick = () => {
+
+            this.removeItem(
+                button,
+                ".experience-item",
+                ".experience-title",
+                "Experience",
+                this.updateExperiencePreview
+            );
+
+        };
+
+    });
+
+    this.updateExperienceNumbers();
+
+    this.updateExperiencePreview();
+
+},
+updateExperienceNumbers() {
+
+    const cards =
+        this.elements.experienceContainer.querySelectorAll(".experience-item");
+
+    cards.forEach((card, index) => {
+
+        let title = card.querySelector(".experience-title");
+
+        if (!title) {
+
+            title = document.createElement("h3");
+
+            title.className = "experience-title";
+
+            card.prepend(title);
+
+        }
+
+        title.textContent = `Experience #${index + 1}`;
+
+    });
+
+},
     addProject() {
 
         console.log("Project Button Clicked");
@@ -938,6 +1057,7 @@ loadDraft() {
     this.updateLivePreview();
 
 },
+
 async downloadPDF() {
 
     const resume = document.querySelector(".live-resume-paper");
@@ -978,13 +1098,180 @@ async downloadPDF() {
     pdf.save(`${name}_Resume.pdf`);
 
 },
+async generateResume() {
 
-    aiImproveResume() {
+    const token = localStorage.getItem("token");
 
-    console.log("AI Improve Resume");
+   const skills = [...document.querySelectorAll(".skillName")]
+    .map(skill => skill.value.trim())
+    .filter(skill => skill !== "");
+
+const projects = [...document.querySelectorAll(".projectName")]
+    .map(project => project.value.trim())
+    .filter(project => project !== "");
+
+const certifications = [...document.querySelectorAll(".certificationName")]
+    .map(cert => cert.value.trim())
+    .filter(cert => cert !== "");
+
+const resumeData = {
+
+    fullName: document.getElementById("fullName").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+
+    industry: document.getElementById("industry").value,
+    experienceLevel: document.getElementById("experienceLevel").value,
+    targetRole: document.getElementById("targetRole").value,
+    preferredLocation: document.getElementById("preferredLocation").value,
+
+    careerObjective: document.getElementById("careerObjective").value,
+    professionalSummary: document.getElementById("professionalSummary").value,
+
+    technicalSkills: skills,
+    projects: projects,
+    certifications: certifications
+
+};
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/resume-builder/generate-ai",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+
+                body: JSON.stringify(resumeData)
+
+            }
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+
+            alert(result.message);
+
+            return;
+
+        }
+
+      const ai = result.data;
+      console.log("Complete AI Response:", ai);
+
+// Professional Summary
+document.getElementById("professionalSummary").value =
+    ai.professionalSummary || "";
+
+// Career Objective
+document.getElementById("careerObjective").value =
+    ai.careerObjective || "";
+
+// Target Role (AI agar bheje)
+if (ai.targetRole) {
+    document.getElementById("targetRole").value = ai.targetRole;
+}
+
+// AI Skills ko Console me check karo
+console.log("AI Skills:", ai.technicalSkills);
+console.log("AI Projects:", ai.projects);
+console.log("AI Certifications:", ai.certifications);
+// =======================
+// AI Skills Autofill
+// =======================
+
+this.elements.skillsContainer.innerHTML = "";
+
+if (Array.isArray(ai.technicalSkills)) {
+
+    ai.technicalSkills.forEach(skill => {
+
+        this.addSkill();
+
+        const lastSkill =
+            this.elements.skillsContainer.lastElementChild;
+
+        lastSkill.querySelector(".skillName").value = skill;
+
+    });
+
+}
+// =======================
+// AI Projects Autofill
+// =======================
+
+this.elements.projectsContainer.innerHTML = "";
+
+if (Array.isArray(ai.projects)) {
+
+    ai.projects.forEach(project => {
+
+        this.addProject();
+
+        const lastProject =
+            this.elements.projectsContainer.lastElementChild;
+
+        if (!lastProject) return;
+
+        lastProject.querySelector(".projectName").value =
+            project.title || "";
+
+        lastProject.querySelector(".projectDescription").value =
+            project.description || "";
+
+    });
+
+}
+
+this.updateProjectsPreview();
+
+
+// =======================
+// AI Certifications Autofill
+// =======================
+
+this.elements.certificationContainer.innerHTML = "";
+
+if (Array.isArray(ai.certifications)) {
+
+    ai.certifications.forEach(cert => {
+
+        this.addCertification();
+
+        const lastCert =
+            this.elements.certificationContainer.lastElementChild;
+
+        if (!lastCert) return;
+
+        lastCert.querySelector(".certificationName").value = cert;
+
+    });
+
+}
+
+this.updateCertificationsPreview();
+this.updateSkillsPreview();
+
+// Live Preview Update
+this.updateLivePreview();
+
+alert("AI Resume Generated Successfully!");
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert("AI Generation Failed");
+
+    }
 
 },
-
 async uploadResume() {
 
     const file = this.elements.resumeUpload.files[0];

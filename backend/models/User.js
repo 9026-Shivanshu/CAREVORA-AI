@@ -69,11 +69,16 @@ provider: {
       default: "",
     },
 
-    role: {
-      type: String,
-      enum: ["student", "admin"],
-      default: "student",
-    },
+  role: {
+  type: String,
+  enum: [
+    "student",
+    "recruiter",
+    "admin",
+    "super_admin",
+  ],
+  default: "student",
+},
     resetOTP: {
   type: String,
   default: "",
@@ -92,10 +97,188 @@ resetTokenExpire: {
   type: Date,
   default: null,
 },
+// ==============================
+// Career Intelligence
+// ==============================
+
+careerGoal: {
+  type: String,
+  default: "",
+},
+
+preferredJobRole: {
+  type: String,
+  default: "",
+},
+
+preferredLocation: {
+  type: String,
+  default: "",
+},
+
+experienceLevel: {
+  type: String,
+  enum: ["Fresher", "Student", "Experienced"],
+  default: "Student",
+},
+
+// ==============================
+// AI Scores
+// ==============================
+
+careerDNAScore: {
+  type: Number,
+  default: 0,
+},
+
+placementReadinessIndex: {
+  type: Number,
+  default: 0,
+},
+
+skillGapScore: {
+  type: Number,
+  default: 0,
+},
+
+profileCompletion: {
+  type: Number,
+  default: 0,
+},
+
+// ==============================
+// Social Profiles
+// ==============================
+
+linkedin: {
+  type: String,
+  default: "",
+},
+
+github: {
+  type: String,
+  default: "",
+},
+
+portfolio: {
+  type: String,
+  default: "",
+},
+
+leetcode: {
+  type: String,
+  default: "",
+},
+
+hackerrank: {
+  type: String,
+  default: "",
+},
+
+// ==============================
+// AI Settings
+// ==============================
+
+aiProvider: {
+  type: String,
+  enum: ["gemini", "openai"],
+  default: "gemini",
+},
+
+// ==============================
+// Notification Settings
+// ==============================
+
+notificationEnabled: {
+  type: Boolean,
+  default: true,
+},
+
+emailNotification: {
+  type: Boolean,
+  default: true,
+},
+
+// ==============================
+// Account Status
+// ==============================
+
+accountStatus: {
+  type: String,
+  enum: ["active", "inactive", "blocked"],
+  default: "active",
+},
+
+lastLogin: {
+  type: Date,
+  default: null,
+},
+// ==============================
+// Email & Phone Verification
+// ==============================
+
+isVerified: {
+  type: Boolean,
+  default: false,
+},
+
+emailVerified: {
+  type: Boolean,
+  default: false,
+},
+
+phoneVerified: {
+  type: Boolean,
+  default: false,
+},
+
+// ==============================
+// Login Activity
+// ==============================
+
+loginAttempts: {
+  type: Number,
+  default: 0,
+},
+
+lockUntil: {
+  type: Date,
+  default: null,
+},
+
+lastIPAddress: {
+  type: String,
+  default: "",
+},
+
+lastDevice: {
+  type: String,
+  default: "",
+},
+
+// ==============================
+// Recruiter Information
+// ==============================
+
+companyName: {
+  type: String,
+  default: "",
+},
+
+designation: {
+  type: String,
+  default: "",
+},
+
+companyWebsite: {
+  type: String,
+  default: "",
+},
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports =
+  mongoose.models.User || mongoose.model("User", userSchema);

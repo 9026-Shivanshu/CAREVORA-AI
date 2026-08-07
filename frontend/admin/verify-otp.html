@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP | PATHLY AI</title>
+
+    <link rel="stylesheet" href="../assets/css/admin.css">
+
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+<div class="login-box">
+
+<div class="login-logo">
+
+<i class="fa-solid fa-shield-halved"></i>
+
+<h1>Verify OTP</h1>
+
+<p>Enter the OTP sent to your email</p>
+
+</div>
+
+<form id="verifyOTPForm">
+
+<div class="input-group">
+
+<label>OTP</label>
+
+<input
+type="text"
+id="otp"
+maxlength="6"
+placeholder="Enter 6 Digit OTP"
+required>
+
+</div>
+
+<button
+type="submit"
+class="login-btn">
+
+Verify OTP
+
+</button>
+
+</form>
+<div class="otp-timer">
+
+    <span id="timer">
+        Resend OTP in 60s
+    </span>
+
+    <br><br>
+
+    <a
+        href="#"
+        id="resendOTP"
+        style="display:none;">
+
+        Resend OTP
+
+    </a>
+
+</div>
+<p class="footer-text">
+
+<a href="forgot-password.html">
+
+Back
+
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+<script src="../assets/js/verifyOTP.js"></script>
+
+</body>
+
+</html>
