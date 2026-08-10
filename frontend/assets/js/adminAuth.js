@@ -55,7 +55,7 @@ form.addEventListener("submit", async (e) => {
    await Swal.fire({
   icon: "success",
   title: "Login Successful",
-  text: "Welcome to PATHLY AI Admin Panel",
+  text: "Welcome to  Admin Panel",
   timer: 1500,
   showConfirmButton: false
 });

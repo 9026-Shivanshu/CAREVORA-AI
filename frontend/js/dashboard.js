@@ -1,5 +1,5 @@
 // ==========================================
-// PATHLY AI
+// CAREVORA AI
 // Dashboard V2
 // ==========================================
 
@@ -180,3 +180,118 @@ async function loadDashboardStats() {
 }
 
 loadDashboardStats();
+// ================= Career DNA Demo =================
+
+function updateCareerDNA(data){
+
+  document.getElementById('frontendValue').textContent = data.frontend + '%';
+  document.getElementById('backendValue').textContent = data.backend + '%';
+  document.getElementById('dsaValue').textContent = data.dsa + '%';
+  document.getElementById('commValue').textContent = data.communication + '%';
+
+  document.getElementById('frontendBar').style.width = data.frontend + '%';
+  document.getElementById('backendBar').style.width = data.backend + '%';
+  document.getElementById('dsaBar').style.width = data.dsa + '%';
+  document.getElementById('commBar').style.width = data.communication + '%';
+
+  document.getElementById('priValue').textContent = data.pri;
+
+}
+
+// Demo values
+updateCareerDNA({
+  frontend:78,
+  backend:65,
+  dsa:42,
+  communication:71,
+  pri:73
+});
+// =====================================
+// Career DNA + PRI from real skills
+// =====================================
+
+async function loadCareerDNA() {
+
+    try {
+
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(
+            "http://localhost:5000/api/student/profile",
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!data.success) return;
+
+        const skills = data.student.skills || [];
+
+       let frontend = 0;
+let backend = 0;
+let dsa = 0;
+let communication = 0;
+
+        skills.forEach(skill => {
+
+            const name = skill.name.toLowerCase();
+            const level = skill.level;
+
+            const weight =
+                level === "Advanced" ? 15 :
+                level === "Intermediate" ? 10 : 5;
+
+            // Frontend
+            if (["html", "css", "html/css", "javascript", "react"].includes(name)) {
+                frontend += weight;
+            }
+
+            // Backend
+            if (["node.js", "express", "mongodb", "mysql"].includes(name)) {
+                backend += weight;
+            }
+
+            // DSA
+            if (["java", "python", "c++", "dsa"].includes(name)) {
+                dsa += weight;
+            }
+
+        });
+
+        frontend = Math.min(frontend, 100);
+        backend = Math.min(backend, 100);
+        dsa = Math.min(dsa, 100);
+
+        // Update values
+        document.getElementById("frontendValue").textContent = frontend + "%";
+        document.getElementById("backendValue").textContent = backend + "%";
+        document.getElementById("dsaValue").textContent = dsa + "%";
+        document.getElementById("commValue").textContent = communication + "%";
+
+        // Update bars
+        document.getElementById("frontendBar").style.width = frontend + "%";
+        document.getElementById("backendBar").style.width = backend + "%";
+        document.getElementById("dsaBar").style.width = dsa + "%";
+        document.getElementById("commBar").style.width = communication + "%";
+
+        // PRI
+        const pri = Math.round(
+            (frontend + backend + dsa + communication) / 4
+        );
+
+        document.getElementById("priValue").textContent = pri;
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+// Run on page load
+loadCareerDNA();

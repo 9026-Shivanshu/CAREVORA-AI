@@ -1,4 +1,4 @@
-console.log("PATHLY AI App Loaded Successfully");
+console.log("CAREVORA AI App Loaded Successfully");
 
 const contactForm = document.getElementById("contactForm");
 const submitBtn = contactForm.querySelector("button[type='submit']");

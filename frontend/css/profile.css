@@ -1,5 +1,5 @@
 /* =====================================
-   PATHLY AI - Profile Page
+   CAREVORA AI - Profile Page
 ===================================== */
 
 *{
@@ -253,4 +253,324 @@ body{
 
 }
 
+}
+.edit-btn{
+    margin-top:15px;
+    padding:12px 24px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.edit-btn:hover{
+    background:#1d4ed8;
+}
+.profile-section{
+    background:white;
+    margin-top:25px;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-top:20px;
+}
+
+.profile-grid label{
+    font-weight:600;
+    color:#64748b;
+    display:block;
+    margin-bottom:6px;
+}
+
+.profile-grid p{
+    font-size:16px;
+    color:#0f172a;
+}
+.progress-container{
+    margin-top:25px;
+}
+
+.progress-bar{
+    width:100%;
+    height:18px;
+    background:#e2e8f0;
+    border-radius:30px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+    background:#2563eb;
+    transition:.5s;
+}
+
+#profilePercentage{
+    margin-top:15px;
+    color:#2563eb;
+}
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.section-edit-btn{
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    white-space:nowrap;
+    min-width:80px;
+    transition:.3s;
+}
+
+.section-edit-btn:hover{
+    background:#1d4ed8;
+}
+@media (max-width:768px){
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .section-edit-btn{
+        width:100%;
+        margin-top:10px;
+    }
+
+}/* ==========================
+   Edit Modal
+========================== */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:9999;
+}
+
+.modal-content{
+
+    width:90%;
+    max-width:650px;
+
+    background:#fff;
+
+    margin:50px auto;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    animation:popup .25s ease;
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:scale(.8);
+
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+}
+
+.modal-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+}
+
+#closeModal{
+
+font-size:30px;
+
+cursor:pointer;
+
+}
+
+#modalFields{
+
+display:grid;
+
+gap:18px;
+
+}
+
+#modalFields input{
+
+padding:14px;
+
+border:1px solid #ddd;
+
+border-radius:8px;
+
+font-size:15px;
+
+}
+
+.save-btn{
+
+margin-top:25px;
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+background:#2563eb;
+
+color:white;
+
+border-radius:8px;
+
+font-size:16px;
+
+cursor:pointer;
+
+font-weight:600;
+
+}
+.avatar{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+    margin-bottom:24px;
+}
+
+.avatar img{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #2563eb;
+    display:block;
+}
+
+.change-photo-btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    min-width:140px;
+}
+
+.change-photo-btn:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+/* =====================================
+   Skills
+===================================== */
+
+.skill-input-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.skill-input-group input,
+.skill-input-group select {
+    flex: 1;
+    min-width: 160px;
+    padding: 12px 14px;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.skill-input-group button {
+    background: #2563EB;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.skill-input-group button:hover {
+    background: #1D4ED8;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.skill-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.skill-chip.beginner {
+    background: #64748B;
+}
+
+.skill-chip.intermediate {
+    background: #7C3AED;
+}
+
+.skill-chip.advanced {
+    background: #059669;
+}
+
+.skill-chip button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }

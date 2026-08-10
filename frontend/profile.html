@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Profile | PATHLY AI </title>
+    <title>Profile | CAREVORA AI </title>
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
@@ -30,7 +30,7 @@
 
             <i class="fa-solid fa-graduation-cap"></i>
 
-            <h2>PATHLY AI</h2>
+            <h2>CAREVORA AI</h2>
 
         </div>
 
@@ -72,9 +72,27 @@
 
             <div class="avatar">
 
-                <i class="fa-solid fa-user"></i>
+    <img
+        id="profileImage"
+       src="https://i.pravatar.cc/150?img=12"
+        alt="Profile"
+    />
 
-            </div>
+    <input
+        type="file"
+        id="profileImageInput"
+        accept="image/*"
+        hidden
+    />
+
+    <button
+        class="change-photo-btn"
+        onclick="document.getElementById('profileImageInput').click()"
+    >
+        Change Photo
+    </button>
+
+</div>
 
             <div class="info">
 
@@ -85,7 +103,197 @@
             </div>
 
         </div>
+<div class="profile-section">
 
+   <div class="section-header">
+    <h2>Personal Information</h2>
+
+    <button class="section-edit-btn" data-section="personal">
+        ✏ Edit
+    </button>
+</div>
+
+    <div class="profile-grid">
+
+        <div>
+            <label>Phone</label>
+            <p id="studentPhone">-</p>
+        </div>
+
+        <div>
+            <label>Gender</label>
+            <p id="studentGender">-</p>
+        </div>
+
+        <div>
+            <label>Date of Birth</label>
+            <p id="studentDob">-</p>
+        </div>
+
+    </div>
+
+</div>
+<div class="profile-section">
+
+  <div class="section-header">
+    <h2>Academic Information</h2>
+
+    <button class="section-edit-btn" data-section="academic">
+        ✏ Edit
+    </button>
+</div>
+
+    <div class="profile-grid">
+
+        <div>
+            <label>College</label>
+            <p id="studentCollege">-</p>
+        </div>
+
+        <div>
+            <label>Course</label>
+            <p id="studentCourse">-</p>
+        </div>
+
+        <div>
+            <label>Branch</label>
+            <p id="studentBranch">-</p>
+        </div>
+
+        <div>
+            <label>Year</label>
+            <p id="studentYear">-</p>
+        </div>
+
+    </div>
+
+</div>
+<div class="profile-section">
+
+<div class="section-header">
+    <h2>Career Information</h2>
+
+    <button class="section-edit-btn" data-section="career">
+        ✏ Edit
+    </button>
+</div>
+
+    <div class="profile-grid">
+
+        <div>
+            <label>Career Goal</label>
+            <p id="studentCareerGoal">-</p>
+        </div>
+
+        <div>
+            <label>Preferred Role</label>
+            <p id="studentPreferredRole">-</p>
+        </div>
+
+        <div>
+            <label>Preferred Location</label>
+            <p id="studentPreferredLocation">-</p>
+        </div>
+
+        <div>
+            <label>Expected Salary</label>
+            <p id="studentExpectedSalary">-</p>
+        </div>
+
+        <div style="grid-column:1/4;">
+            <label>Bio</label>
+            <p id="studentBio">-</p>
+        </div>
+
+    </div>
+
+</div>
+<div class="profile-section">
+
+   <div class="section-header">
+    <!-- ===================================== -->
+<!-- Skills Section -->
+<!-- ===================================== -->
+
+<div class="profile-card skills-card">
+
+    <div class="section-header">
+
+        <h2>Skills</h2>
+
+    </div>
+
+    <div class="skill-input-group">
+
+        <input
+            type="text"
+            id="skillName"
+            placeholder="Enter skill (e.g. JavaScript)"
+        />
+
+        <select id="skillLevel">
+
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+
+        </select>
+
+        <button id="addSkillBtn" type="button">
+
+            Add
+
+        </button>
+
+    </div>
+
+    <div id="skillsList" class="skills-list"></div>
+
+</div>
+    <h2>Social Links</h2>
+
+    <button class="section-edit-btn" data-section="social">
+        ✏ Edit
+    </button>
+</div>
+
+    <div class="profile-grid">
+
+        <div>
+            <label>LinkedIn</label>
+            <p id="studentLinkedin">-</p>
+        </div>
+
+        <div>
+            <label>GitHub</label>
+            <p id="studentGithub">-</p>
+        </div>
+
+        <div>
+            <label>Portfolio</label>
+            <p id="studentPortfolio">-</p>
+        </div>
+
+    </div>
+
+</div>
+<div class="profile-section">
+
+    <h2>Profile Completion</h2>
+
+    <div class="progress-container">
+
+        <div class="progress-bar">
+
+            <div id="profileProgressBar" class="progress-fill"></div>
+
+        </div>
+
+        <h3 id="profilePercentage">0%</h3>
+
+    </div>
+
+</div>
         <!-- Resume Summary -->
 
         <div class="summary">
@@ -145,7 +353,41 @@
             </table>
 
         </div>
+<!-- ========================================= -->
+<!-- Edit Profile Modal -->
+<!-- ========================================= -->
 
+<div id="editModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Edit Profile
+            </h2>
+
+            <span id="closeModal">&times;</span>
+
+        </div>
+
+        <form id="editForm">
+
+            <div id="modalFields">
+
+            </div>
+
+            <button type="submit" class="save-btn">
+
+                Save Changes
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
     </main>
 
 </div>

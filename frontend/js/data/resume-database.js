@@ -1,5 +1,5 @@
 // ============================================
-// PATHLY AI
+// CAREVORA AI
 // Master Resume Database V1
 // ============================================
 
@@ -261,7 +261,7 @@ courses:[
     projects:[
 
         "E-Commerce Website",
-        "PATHLY AI",
+        "CAREVORA AI",
         "Blog Website",
         "Student Management System"
 
@@ -369,7 +369,7 @@ courses:[
         "Library Management System",
         "Bank Management System",
         "Hospital Management System",
-        "PATHLY AI"
+        "CAREVORA AI"
 
     ],
 

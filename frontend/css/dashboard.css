@@ -1,5 +1,5 @@
 /* ==============================
-   PATHLY AI Dashboard V2
+   CAREVORA AI Dashboard V2
 ============================== */
 
 *{
@@ -249,4 +249,154 @@ body{
     min-width:850px;
 }
 
+}
+/* ================= Career DNA & PRI ================= */
+
+.career-section{
+    margin: 25px 0;
+}
+
+.career-grid{
+    display:grid;
+    grid-template-columns: 2fr 1fr;
+    gap:24px;
+}
+
+.career-card{
+    background:#fff;
+    border-radius:24px;
+    padding:24px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.card-header h3{
+    margin:0;
+    font-size:22px;
+    color:#0f172a;
+}
+
+.card-header span{
+    background:#eef2ff;
+    color:#4f46e5;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.skill-item{
+    margin-bottom:18px;
+}
+
+.skill-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#334155;
+}
+
+.skill-bar{
+    height:10px;
+    background:#e2e8f0;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.skill-fill{
+    height:100%;
+    border-radius:999px;
+    transition:width .6s ease;
+}
+
+.frontend{ background:#2563eb; }
+.backend{ background:#7c3aed; }
+.dsa{ background:#ef4444; }
+.communication{ background:#10b981; }
+
+.pri-card{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.pri-circle{
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:conic-gradient(#2563eb 0deg 262deg,#e2e8f0 262deg 360deg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:10px 0 20px;
+}
+
+.pri-inner{
+    width:140px;
+    height:140px;
+    background:#fff;
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.pri-inner h2{
+    margin:0;
+    font-size:42px;
+    color:#2563eb;
+}
+
+.pri-inner p{
+    margin:0;
+    color:#64748b;
+    font-weight:600;
+}
+
+.status-badge{
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.status-badge.ready{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.pri-meta{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    margin-top:24px;
+    padding-top:18px;
+    border-top:1px solid #e2e8f0;
+}
+
+.pri-meta small{
+    display:block;
+    color:#64748b;
+    margin-bottom:4px;
+}
+
+.pri-meta strong{
+    color:#0f172a;
+}
+
+@media (max-width: 900px){
+    .career-grid{
+        grid-template-columns:1fr;
+    }
 }

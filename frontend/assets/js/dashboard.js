@@ -36,7 +36,7 @@ async function loadDashboardStats() {
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/dashboard/admin-stats",
+"http://localhost:5000/api/dashboard/admin-stats",
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -81,7 +81,7 @@ async function loadRecentActivities() {
     try {
 
         const response = await fetch(
-            "http://localhost:5000/api/dashboard/recent-activities",
+"http://localhost:5000/api/dashboard/recent-activities",
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -142,7 +142,7 @@ async function loadDashboardChart() {
         }
 
         const response = await fetch(
-            "http://localhost:5000/api/dashboard/charts",
+"http://localhost:5000/api/dashboard/charts",
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -983,7 +983,7 @@ function updateDashboardGreeting(admin) {
         case "super_admin":
 
             description.textContent =
-                "Welcome back to PATHLY AI. Manage administrators, permissions and system activities.";
+                "Welcome back to CAREVORA AI. Manage administrators, permissions and system activities.";
 
             break;
 
@@ -1011,7 +1011,7 @@ function updateDashboardGreeting(admin) {
         default:
 
             description.textContent =
-                "Welcome back to PATHLY AI.";
+                "Welcome back to CAREVORA AI.";
 
     }
 
