@@ -4,12 +4,16 @@ const router = express.Router();
 
 const authMiddleware = require("../middleware/authMiddleware");
 
-const {
-    createStudentProfile,
-    getStudentProfile,
-    updateStudentProfile
-} = require("../controllers/studentController");
+const profileUpload = require("../middleware/profileUpload");
 
+const {
+  createStudentProfile,
+  getStudentProfile,
+  updateStudentProfile,
+  uploadProfileImage,
+  addSkill,
+  deleteSkill
+} = require("../controllers/studentController");
 // ===============================
 // Student Profile
 // ===============================
@@ -35,4 +39,28 @@ router.put(
     updateStudentProfile
 );
 
+// Upload Profile Image
+router.put(
+    "/profile/image",
+    authMiddleware,
+    profileUpload.single("profileImage"),
+    uploadProfileImage
+);
+// =====================================
+// Skills
+// =====================================
+
+// Add Skill
+router.post(
+  "/skills",
+  authMiddleware,
+  addSkill
+);
+
+// Delete Skill
+router.delete(
+  "/skills/:id",
+  authMiddleware,
+  deleteSkill
+);
 module.exports = router;

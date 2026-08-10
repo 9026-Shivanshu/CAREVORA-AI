@@ -57,18 +57,19 @@ exports.getStudentProfile = async (req, res) => {
 
     try {
 
-        const student = await Student.findOne({
-            user: req.user.id
-        });
+       let student = await Student.findOne({ user: req.user.id });
 
         if (!student) {
 
-            return res.status(404).json({
-                success: false,
-                message: "Profile not found."
-            });
+    const user = await User.findById(req.user.id);
 
-        }
+    student = await Student.create({
+        user: req.user.id,
+        fullName: user?.fullName || "Student",
+        email: user?.email || ""
+    });
+
+}
 
         res.json({
             success: true,
@@ -110,8 +111,78 @@ exports.updateStudentProfile = async (req, res) => {
         }
 
         Object.assign(student, req.body);
+        // =====================================
+// Upload Profile Image
+// =====================================
+
+exports.uploadProfileImage = async (req, res) => {
+
+    try {
+
+        const student = await Student.findOne({
+            user: req.user.id
+        });
+
+        if (!student) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Profile not found."
+            });
+
+        }
+
+        if (!req.file) {
+
+            return res.status(400).json({
+                success: false,
+                message: "No image selected."
+            });
+
+        }
+
+        student.profileImage = `/uploads/profiles/${req.file.filename}`;
 
         await student.save();
+
+        res.json({
+            success: true,
+            message: "Profile image uploaded successfully.",
+            image: student.profileImage
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+
+};
+// ===== Auto Profile Completion =====
+let completion = 0;
+
+if (student.profileImage) completion += 10;
+if (student.phone) completion += 10;
+if (student.gender) completion += 5;
+if (student.dateOfBirth) completion += 5;
+if (student.college) completion += 10;
+if (student.course) completion += 10;
+if (student.branch) completion += 10;
+if (student.year) completion += 10;
+if (student.city) completion += 5;
+if (student.state) completion += 5;
+if (student.country) completion += 5;
+if (student.careerGoal) completion += 5;
+if (student.bio) completion += 10;
+
+student.profileCompletion = Math.min(completion, 100);
+        await student.save();
+
 
         res.json({
             success: true,
@@ -130,4 +201,126 @@ exports.updateStudentProfile = async (req, res) => {
 
     }
 
+};
+exports.uploadProfileImage = async (req, res) => {
+    try {
+
+        const student = await Student.findOne({
+            user: req.user.id
+        });
+
+        if (!student) {
+            return res.status(404).json({
+                success: false,
+                message: "Profile not found."
+            });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "No image selected."
+            });
+        }
+
+        student.profileImage =
+            `/uploads/profile/${req.file.filename}`;
+        await student.save();
+
+        res.json({
+            success: true,
+            image: student.profileImage
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error"
+        });
+
+    }
+};
+// =====================================
+// Add Skill
+// =====================================
+exports.addSkill = async (req, res) => {
+  try {
+
+    const { name, level } = req.body;
+
+    if (!name) {
+      return res.status(400).json({
+        success: false,
+        message: "Skill name is required"
+      });
+    }
+
+    const student = await Student.findOne({
+      user: req.user.id
+    });
+
+    if (!student) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile not found"
+      });
+    }
+
+    student.skills.push({
+      name,
+      level: level || "Beginner"
+    });
+
+    await student.save();
+
+    res.json({
+      success: true,
+      skills: student.skills
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+
+  }
+};
+// =====================================
+// Delete Skill
+// =====================================
+exports.deleteSkill = async (req, res) => {
+  try {
+
+    const student = await Student.findOne({
+      user: req.user.id
+    });
+
+    student.skills = student.skills.filter(
+      skill => skill._id.toString() !== req.params.id
+    );
+
+    await student.save();
+
+    res.json({
+      success: true,
+      skills: student.skills
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+
+  }
 };

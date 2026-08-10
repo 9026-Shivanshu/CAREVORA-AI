@@ -136,7 +136,20 @@ const studentSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-
+// ================= Skills =================
+skills: [
+  {
+    name: {
+      type: String,
+      trim: true
+    },
+    level: {
+      type: String,
+      enum: ["Beginner", "Intermediate", "Advanced"],
+      default: "Beginner"
+    }
+  }
+],
     // ==========================
     // Dashboard
     // ==========================

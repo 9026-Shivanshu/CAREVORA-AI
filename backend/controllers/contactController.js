@@ -41,18 +41,18 @@ await sendEmail({
 // Thank You Email to User
 await sendEmail({
   to: email,
-  subject: "✅ Thank You for Contacting PATHLY AI",
+  subject: "✅ Thank You for Contacting CAREVORA AI",
   html: `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;border:1px solid #ddd;border-radius:10px;">
       
       <h2 style="color:#2563eb;text-align:center;">
-        PATHLY AI
+        CAREVORA AI
       </h2>
 
       <p>Dear <strong>${fullName}</strong>,</p>
 
       <p>
-        Thank you for contacting <strong>PATHLY AI</strong>.
+        Thank you for contacting <strong>CAREVORA AI</strong>.
       </p>
 
       <p>
@@ -78,7 +78,7 @@ await sendEmail({
 
       <p>
         Regards,<br>
-        <strong>PATHLY AI Team</strong>
+        <strong>CAREVORA AI Team</strong>
       </p>
 
       <hr>

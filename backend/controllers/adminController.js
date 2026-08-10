@@ -277,7 +277,7 @@ await sendEmail({
   to: admin.email,
   subject: "Admin Password Reset OTP",
   html: `
-      <h2> PATHLY AI - Admin Password Reset</h2>
+      <h2> CAREVORA AI - Admin Password Reset</h2>
 
       <p>Hello ${admin.fullName},</p>
 

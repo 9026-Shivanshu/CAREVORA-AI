@@ -1,7 +1,7 @@
 {
   "name": "ai-career-mentor-backend",
   "version": "1.0.0",
-  "description": "Backend for PATHLY AI",
+  "description": "Backend for CAREVORA AI",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {

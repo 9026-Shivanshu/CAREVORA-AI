@@ -60,7 +60,7 @@ if (!isStrongPassword(password)) {
     });
 const html = `
 <div style="font-family:Arial,sans-serif;padding:20px">
-  <h2 style="color:#2563eb;">🎉 Welcome to PATHLY AI </h2>
+  <h2 style="color:#2563eb;">🎉 Welcome to CAREVORA AI </h2>
 
   <p>Hello <b>${newUser.fullName}</b>,</p>
 
@@ -77,7 +77,7 @@ const html = `
     </tr>
   </table>
 
-  <p>You can now login and start using PATHLY AI.</p>
+  <p>You can now login and start using CAREVORA AI.</p>
 
   <p>
     ✔ Resume Analyzer<br>
@@ -90,14 +90,14 @@ const html = `
 
   <p style="color:gray">
     Regards,<br>
-    PATHLY AI Team
+    CAREVORA AI  Team
   </p>
 </div>
 `;
 
 await sendEmail({
   to: newUser.email,
-  subject: "🎉 Welcome to PATHLY AI",
+  subject: "🎉 Welcome to CAREVORA AI",
   html,
 });
     res.status(201).json({
@@ -192,7 +192,7 @@ exports.forgotPassword = async (req, res) => {
     await user.save();
 
     const html = `
-      <h2>PATHLY AI</h2>
+      <h2>CAREVORA AI</h2>
 
       <p>Your OTP for password reset is:</p>
 

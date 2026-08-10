@@ -47,6 +47,7 @@ app.use("/api/roadmap", roadmapRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/permissions", permissionRoutes);
 app.use("/api/student", studentRoutes);
+app.use("/uploads", express.static("uploads"));
 app.get("/", (req, res) => {
 
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
