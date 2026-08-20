@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAREVORA AI - ATS Score</title>
+  <link rel="stylesheet" href="css/ats.css" />
+</head>
+<body>
+
+  <div class="ats-container">
+
+    <h1>ATS Resume Analyzer</h1>
+    <p>Upload your resume and get an AI-powered ATS score with skill gap analysis.</p>
+
+    <div class="upload-card">
+
+      <label>Target Job Role</label>
+<select id="targetRole">
+  <option value="">Select Job Role</option>
+
+  <optgroup label="Information Technology">
+    <option value="frontend developer">Frontend Developer</option>
+    <option value="web developer">Web Developer</option>
+    <option value="java developer">Java Developer</option>
+    <option value="data analyst">Data Analyst</option>
+    <option value="digital marketing">Digital Marketing</option>
+  </optgroup>
+
+  <optgroup label="Healthcare">
+    <option value="nursing">Nursing</option>
+    <option value="healthcare">Healthcare</option>
+    <option value="pharmacist">Pharmacist</option>
+  </optgroup>
+
+  <optgroup label="Education">
+    <option value="teacher">Teacher</option>
+    <option value="education">Education</option>
+    <option value="professor">Professor</option>
+  </optgroup>
+
+  <optgroup label="Commerce & Finance">
+    <option value="commerce">Commerce</option>
+    <option value="accountant">Accountant</option>
+  </optgroup>
+
+  <optgroup label="Engineering">
+    <option value="mechanical engineer">Mechanical Engineer</option>
+    <option value="civil engineer">Civil Engineer</option>
+  </optgroup>
+
+  <optgroup label="Other Fields">
+    <option value="law">Law</option>
+    <option value="research">Research</option>
+    <option value="agriculture">Agriculture</option>
+    <option value="hotel management">Hotel Management</option>
+    <option value="arts">Arts</option>
+  </optgroup>
+</select>
+<label>Job Description (Optional)</label>
+
+<textarea
+  id="jobDescription"
+  rows="8"
+  placeholder="Paste the job description here..."></textarea>
+
+<div class="jd-actions">
+  <button type="button" id="generateJDBtn">
+    ✨ Generate JD with AI
+  </button>
+
+  <button type="button" id="clearJDBtn">
+    Clear JD
+  </button>
+</div>
+
+      <label>Upload Resume (PDF)</label>
+      <input type="file" id="resumeFile" accept=".pdf">
+
+      <button id="analyzeBtn">Analyze Resume</button>
+
+    </div>
+
+   <div class="result-card" id="resultCard" style="display:none;">
+
+  <div class="score-section">
+
+    <div class="score-ring">
+      <div class="score-inner">
+        <span id="atsScore">0</span>
+        <small>/100</small>
+      </div>
+    </div>
+
+    <h2>ATS Score</h2>
+    <span class="score-badge">Average</span>
+
+  </div>
+
+  <div class="analysis-grid">
+
+    <div class="analysis-box found-box">
+      <h3>✓ Found Skills</h3>
+      <ul id="foundSkills"></ul>
+    </div>
+
+    <div class="analysis-box missing-box">
+      <h3>✕ Missing Skills</h3>
+      <ul id="missingSkills"></ul>
+    </div>
+
+  </div>
+<!-- Job Specific ATS Details -->
+<div class="job-match-section">
+
+  <div class="analysis-box">
+    <h3>🎯 Job Match</h3>
+    <div class="match-score">
+      <span id="jobMatch">0</span>%
+    </div>
+  </div>
+
+  <div class="analysis-box">
+    <h3>💼 Experience Match</h3>
+    <div class="match-score">
+      <span id="experienceMatch">0</span>%
+    </div>
+  </div>
+
+  <div class="analysis-box">
+    <h3>🎓 Education Match</h3>
+    <div class="match-score">
+      <span id="educationMatch">0</span>%
+    </div>
+  </div>
+
+  <div class="analysis-box">
+    <h3>📋 Responsibilities Match</h3>
+    <div class="match-score">
+      <span id="responsibilitiesMatch">0</span>%
+    </div>
+  </div>
+
+</div>
+
+<div class="analysis-box matched-keywords-box">
+  <h3>🔑 Matched Keywords</h3>
+  <ul id="matchedKeywords"></ul>
+</div>
+
+<div class="analysis-box missing-keywords-box">
+  <h3>⚠️ Missing Keywords</h3>
+  <ul id="missingKeywords"></ul>
+</div>
+
+<div class="analysis-box readiness-box">
+  <h3>🚀 Apply Readiness</h3>
+  <div id="applyReadiness"></div>
+</div>
+
+<div class="analysis-box summary-box">
+  <h3>🤖 AI Analysis</h3>
+  <p id="aiSummary"></p>
+</div>
+  <div class="analysis-box suggestion-box">
+    <h3>💡 Improvement Suggestions</h3>
+    <ul id="suggestions"></ul>
+  </div>
+
+</div>
+    </div>
+
+  </div>
+
+  <script src="js/ats.js"></script>
+</body>
+</html>

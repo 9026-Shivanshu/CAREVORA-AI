@@ -136,6 +136,10 @@ const studentSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    communicationSkill: {
+    type: Number,
+    default: 0
+},
 // ================= Skills =================
 skills: [
   {

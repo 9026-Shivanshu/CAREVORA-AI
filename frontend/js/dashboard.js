@@ -69,7 +69,7 @@ async function loadInterviewHistory() {
         });
 
         const data = await response.json();
-
+console.log("DASHBOARD API DATA:", data);
         const table = document.getElementById("historyTable");
 
         table.innerHTML = "";
@@ -135,6 +135,7 @@ async function loadInterviewHistory() {
 }
 
 loadInterviewHistory();
+
 // ======================================
 // Dashboard Live Statistics
 // ======================================
@@ -145,38 +146,54 @@ async function loadDashboardStats() {
 
         const token = localStorage.getItem("token");
 
-        const response = await fetch("http://localhost:5000/api/dashboard/stats", {
+        if (!token) {
+            console.log("No token found");
+            return;
+        }
 
-            headers: {
-                Authorization: `Bearer ${token}`
+        const response = await fetch(
+            "http://localhost:5000/api/dashboard/stats",
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             }
-
-        });
+        );
 
         const data = await response.json();
 
-        if (!data.success) return;
+        console.log("DASHBOARD STATS:", data);
 
+        if (!data.success) {
+            console.error(data.message);
+            return;
+        }
+
+        // Resume Score
         document.getElementById("resumeScore").innerText =
-            data.resumeScore + "%";
+            `${data.resumeScore || 0}%`;
 
+        // ATS Score
         document.getElementById("atsScore").innerText =
-            data.atsScore + "%";
+            `${data.atsScore || 0}%`;
 
+        // Interview Score
         document.getElementById("interviewScore").innerText =
-            data.interviewScore + "%";
+            `${data.interviewScore || 0}%`;
 
+        // Total Interviews
         document.getElementById("totalInterviews").innerText =
-            data.totalInterviews;
+            data.totalInterviews || 0;
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard Statistics Error:",
+            error
+        );
 
     }
-
-    catch (error) {
-
-        console.error("Dashboard Error:", error);
-
-    }
-
 }
 
 loadDashboardStats();
@@ -226,15 +243,17 @@ async function loadCareerDNA() {
         );
 
         const data = await response.json();
-
+console.log("DASHBOARD API DATA:", data);
         if (!data.success) return;
 
         const skills = data.student.skills || [];
+        const communication =
+    parseInt(data.student.communicationSkill) || 0;
+        
 
        let frontend = 0;
 let backend = 0;
 let dsa = 0;
-let communication = 0;
 
         skills.forEach(skill => {
 
@@ -259,6 +278,19 @@ let communication = 0;
             if (["java", "python", "c++", "dsa"].includes(name)) {
                 dsa += weight;
             }
+            // Communication
+if (
+    [
+        "communication",
+        "english",
+        "public speaking",
+        "presentation",
+        "soft skills",
+        "teamwork"
+    ].includes(name)
+) {
+    communication += weight;
+}
 
         });
 
@@ -284,6 +316,23 @@ let communication = 0;
         );
 
         document.getElementById("priValue").textContent = pri;
+        const scores = {
+    Frontend: frontend,
+    Backend: backend,
+    DSA: dsa,
+    Communication: communication
+};
+
+const strength = Object.keys(scores).reduce((a, b) =>
+    scores[a] > scores[b] ? a : b
+);
+
+const improve = Object.keys(scores).reduce((a, b) =>
+    scores[a] < scores[b] ? a : b
+);
+
+document.getElementById("strengthText").textContent = strength;
+document.getElementById("improveText").textContent = improve;
 
     } catch (error) {
 

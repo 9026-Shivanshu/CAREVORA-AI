@@ -45,12 +45,17 @@ const resumeBuilderSchema = new mongoose.Schema({
 
     careerObjective: String,
 
-    technicalSkills: String,
+    technicalSkills: [{
+    type: String
+}],
 
-    projects: String,
+projects: [{
+    type: String
+}],
 
-    certifications: String,
-
+certifications: [{
+    type: String
+}],
     resumeScore: {
         type: Number,
         default: 0
@@ -70,7 +75,12 @@ const resumeBuilderSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-
+careerDNA: {
+    frontend: Number,
+    backend: Number,
+    dsa: Number,
+    communication: Number
+},
     createdAt: {
         type: Date,
         default: Date.now

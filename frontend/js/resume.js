@@ -22,12 +22,15 @@ window.ResumeBuilder = {
 
         this.bindEvents();
         this.loadDraft();
+        this.validateAIResume();
 
     },
 
     cacheElements() {
 
         this.elements = {
+industry: document.getElementById("industry"),
+targetRole: document.getElementById("targetRole"),
 
             educationContainer: document.getElementById("educationContainer"),
             addEducationBtn: document.getElementById("addEducationBtn"),
@@ -50,6 +53,7 @@ window.ResumeBuilder = {
 
             previewResumeBtn: document.getElementById("previewResumeBtn"),
             generateResumeBtn: document.getElementById("generateResumeBtn"),
+            saveResumeBtn: document.getElementById("saveResumeBtn"),
             saveDraftBtn: document.getElementById("saveDraftBtn"),
             clearDraftBtn: document.getElementById("clearDraftBtn"),
             downloadPdfBtn: document.getElementById("downloadPdfBtn"),
@@ -60,7 +64,7 @@ window.ResumeBuilder = {
             resumeTemplate: document.getElementById("resumeTemplate")
 
         };
-
+//this.elements.generateResumeBtn.disabled = true;
     },
 
     bindEvents() {
@@ -119,7 +123,12 @@ window.ResumeBuilder = {
         () => this.generateResume()
     );
 }
-
+if (this.elements.saveResumeBtn) {
+    this.elements.saveResumeBtn.addEventListener(
+        "click",
+        () => this.saveResume()
+    );
+}
         if (this.elements.saveDraftBtn) {
             this.elements.saveDraftBtn.addEventListener(
                 "click",
@@ -151,7 +160,31 @@ if (this.elements.uploadResumeBtn) {
                 () => window.print()
             );
         }
+// ===== AUTO ROLE FILL =====
+const roleMap = {
+    'Healthcare / Nursing': 'Staff Nurse',
+    'Teaching / Education': 'Teacher',
+    'Professor / Research': 'Research Assistant',
+    'Commerce & Finance': 'Accountant',
+    'Law': 'Legal Associate',
+    'Mechanical Engineering': 'Mechanical Engineer',
+    'Civil Engineering': 'Civil Engineer',
+    'Electrical Engineering': 'Electrical Engineer',
+    'Electronics': 'Electronics Engineer',
+    'Digital Marketing': 'Digital Marketing Executive',
+    'Hotel Management': 'Hotel Operations Executive',
+    'Agriculture': 'Agriculture Officer',
+    'Graphic / UI-UX Design': 'UI/UX Designer',
+    'Computer Science': 'Software Developer',
+    'Information Technology': 'Frontend Developer'
+};
 
+this.elements.industry?.addEventListener('change', (e) => {
+    const role = roleMap[e.target.value];
+    if (role && this.elements.targetRole) {
+        this.elements.targetRole.value = role;
+    }
+});
         if (this.elements.aiImproveBtn) {
             this.elements.aiImproveBtn.addEventListener(
                 "click",
@@ -270,8 +303,29 @@ document.getElementById("previewRole").textContent =
     this.updateProjectsPreview();
     this.updateCertificationsPreview();
     this.updateLanguagesPreview();
+    this.validateAIResume();
 
 },
+validateAIResume() {
+
+    const name = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    
+
+    const skills = [...document.querySelectorAll(".skillName")]
+        .filter(skill => skill.value.trim() !== "");
+
+    const projects = [...document.querySelectorAll(".projectName")]
+        .filter(project => project.value.trim() !== "");
+
+    const isValid =
+    name !== "" &&
+    email !== "" &&
+    skills.length >= 2 &&
+    projects.length >= 1;
+this.elements.generateResumeBtn.disabled = false;
+},
+
 updateEducationPreview() 
 {
 
@@ -1027,6 +1081,76 @@ saveDraft() {
     alert("Resume Draft Saved Successfully!");
 
 },
+async saveResume() {
+
+    const token = localStorage.getItem("token");
+
+    const skills = [...document.querySelectorAll(".skillName")]
+        .map(skill => skill.value.trim())
+        .filter(skill => skill !== "");
+
+    const projects = [...document.querySelectorAll(".projectName")]
+        .map(project => project.value.trim())
+        .filter(project => project !== "");
+
+    const certifications = [...document.querySelectorAll(".certificationName")]
+        .map(cert => cert.value.trim())
+        .filter(cert => cert !== "");
+
+    const resumeData = {
+
+        fullName: document.getElementById("fullName").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+
+        industry: document.getElementById("industry").value,
+        experienceLevel: document.getElementById("experienceLevel").value,
+        targetRole: document.getElementById("targetRole").value,
+        preferredLocation: document.getElementById("preferredLocation").value,
+
+        careerObjective: document.getElementById("careerObjective").value,
+        professionalSummary: document.getElementById("professionalSummary").value,
+
+        technicalSkills: skills,
+        projects: projects,
+        certifications: certifications
+
+    };
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:5000/api/resume-builder/save",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(resumeData)
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            alert("Resume Saved Successfully!");
+
+        } else {
+
+            alert(result.message || "Failed to save resume");
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Error saving resume");
+
+    }
+
+},
 clearDraft() {
 
     localStorage.removeItem("resumeDraft");
@@ -1091,16 +1215,18 @@ async downloadPDF() {
         pdfHeight
     );
 
-    const name =
-        document.getElementById("fullName").value.trim() ||
+
         "Resume";
 
     pdf.save(`${name}_Resume.pdf`);
 
 },
 async generateResume() {
-
+console.log("🔥 Generate button clicked");
     const token = localStorage.getItem("token");
+
+const name = document.getElementById("fullName").value.trim();
+const email = document.getElementById("email").value.trim();
 
    const skills = [...document.querySelectorAll(".skillName")]
     .map(skill => skill.value.trim())
@@ -1125,8 +1251,8 @@ const resumeData = {
     targetRole: document.getElementById("targetRole").value,
     preferredLocation: document.getElementById("preferredLocation").value,
 
-    careerObjective: document.getElementById("careerObjective").value,
-    professionalSummary: document.getElementById("professionalSummary").value,
+   careerObjective: "",
+professionalSummary: "",
 
     technicalSkills: skills,
     projects: projects,
@@ -1134,6 +1260,25 @@ const resumeData = {
 
 };
 
+if (!name) {
+    alert("Please fill Full Name");
+    return;
+}
+
+if (!email) {
+    alert("Please fill Email");
+    return;
+}
+
+if (skills.length < 2) {
+    alert("Please add at least 2 skills");
+    return;
+}
+
+if (projects.length < 1) {
+    alert("Please add at least 1 project");
+    return;
+}
     try {
 
         const response = await fetch(
@@ -1172,6 +1317,15 @@ document.getElementById("professionalSummary").value =
 // Career Objective
 document.getElementById("careerObjective").value =
     ai.careerObjective || "";
+    // Auto update role if AI suggests a better one
+if (ai.targetRole && ai.targetRole.trim() !== "") {
+    document.getElementById("targetRole").value = ai.targetRole;
+}
+
+// Auto update industry if AI suggests one
+if (ai.industry && ai.industry.trim() !== "") {
+    document.getElementById("industry").value = ai.industry;
+}
 
 // Target Role (AI agar bheje)
 if (ai.targetRole) {

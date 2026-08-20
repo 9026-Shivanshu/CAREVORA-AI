@@ -169,6 +169,9 @@ Generate Resume
 Download Resume
 
 </button>
+<button id="saveResumeBtn" class="btn btn-primary">
+    Save Resume
+</button>
 <button id="saveDraftBtn" class="btn btn-secondary">
     <i class="fas fa-save"></i>
     Save Draft
@@ -269,10 +272,10 @@ placeholder="Current City">
 
                 <label>Professional Summary</label>
 
-                <textarea
-                    id="professionalSummary"
-                    rows="5"
-                    placeholder="Write your professional summary..."></textarea>
+              <textarea
+    id="professionalSummary"
+    placeholder="Write your summary yourself or click 'Generate with AI' to create it automatically..."
+></textarea>
 
             </div>
 
@@ -298,31 +301,39 @@ Career Profile
 </h2>
 
 <div class="grid-2">
-
 <div class="form-group">
+    <label>Industry / Education Field</label>
 
-<label>Industry</label>
+    <select id="industry">
 
-<select id="industry">
+        <option value="">Select your field</option>
 
-<option value="">Select Industry</option>
+        <option>Information Technology</option>
+        <option>Computer Science</option>
+        <option>Data Science & AI</option>
+        <option>Cyber Security</option>
+        <option>Software Development / Full Stack</option>
+        <option>Mechanical Engineering</option>
+        <option>Civil Engineering</option>
+        <option>Electrical Engineering</option>
+        <option>Electronics</option>
+        <option>Healthcare / Nursing</option>
+        <option>Pharmacy</option>
+        <option>Biotechnology</option>
+        <option>Commerce & Finance</option>
+        <option>Business Administration (BBA/MBA)</option>
+        <option>Law</option>
+        <option>Teaching / Education</option>
+        <option>Professor / Research</option>
+        <option>Digital Marketing</option>
+        <option>Graphic / UI-UX Design</option>
+        <option>Agriculture</option>
+        <option>Hotel Management</option>
+        <option>Arts & Humanities</option>
+        <option>Government / Public Service</option>
+        <option>Other</option>
 
-<option>Information Technology</option>
-
-<option>Healthcare</option>
-
-<option>Education</option>
-
-<option>Finance</option>
-
-<option>Marketing</option>
-
-<option>Government</option>
-
-<option>Other</option>
-
-</select>
-
+    </select>
 </div>
 
 <div class="form-group">

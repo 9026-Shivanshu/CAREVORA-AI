@@ -277,6 +277,33 @@
     </div>
 
 </div>
+<div class="profile-card">
+
+    <h2>Communication Skills</h2>
+    <small>
+Rate your communication confidence level
+(Interview, Speaking, Presentation)
+</small>
+
+    <div class="communication-box">
+
+        <input
+            type="range"
+            id="communicationSkill"
+            min="0"
+            max="100"
+            value="50"
+        >
+
+        <span id="communicationValue">50%</span>
+
+        <button id="saveCommunicationBtn" class="btn-primary">
+            Save
+        </button>
+
+    </div>
+
+</div>
 <div class="profile-section">
 
     <h2>Profile Completion</h2>
@@ -321,7 +348,7 @@
         <div class="history-card">
 
             <h2>Resume History</h2>
-
+    <div class="history-scroll">
             <table class="history-table">
 
                 <thead>
@@ -336,7 +363,7 @@
 
                 </thead>
 
-                <tbody id="historyBody">
+               <tbody id="resumeHistoryBody">
 
                     <tr>
 
@@ -388,6 +415,30 @@
     </div>
 
 </div>
+<script>
+const token = localStorage.getItem('token');
+
+fetch('http://localhost:5000/api/profile/resume-history', {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+})
+.then(res => res.json())
+.then(data => {
+  const body = document.getElementById('resumeHistoryBody');
+
+  if (!data.history || data.history.length === 0) return;
+
+  body.innerHTML = data.history.map(item => `
+    <tr>
+      <td>${item.resumeName}</td>
+      <td>${item.atsScore}%</td>
+      <td>${new Date(item.uploadedAt).toLocaleDateString()}</td>
+    </tr>
+  `).join('');
+})
+.catch(err => console.error(err));
+</script>
     </main>
 
 </div>

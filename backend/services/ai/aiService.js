@@ -1,4 +1,4 @@
-const providerManager = require("./providers/providerManager");
+const providerManager = require("./providerManager");
 const { buildResumePrompt } = require("./prompts/resumePrompt");
 const { generateDemoResume } = require("./demoResumeGenerator");
 async function generateResumeWithAI(userData) {
@@ -21,7 +21,8 @@ return JSON.parse(cleanedResponse);
 
     console.log("Development Mode Enabled");
 
-    return generateDemoResume(userData);
+ console.log("Development Mode Enabled - Using Smart Fallback");
+return generateDemoResume(userData);
 
 }
   }

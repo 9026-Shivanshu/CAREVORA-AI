@@ -29,7 +29,15 @@ if (!data.success) return;
 
 const student = data.student;
 window.currentStudent = student;
+if(document.getElementById("communicationSkill")){
 
+    document.getElementById("communicationSkill").value =
+        student.communicationSkill || 0;
+
+    document.getElementById("communicationValue").textContent =
+        (student.communicationSkill || 0) + "%";
+
+}
 // SHOW SKILLS AFTER PROFILE LOAD
 renderSkills(student.skills || []);
 
@@ -577,4 +585,48 @@ document
     .getElementById("addSkillBtn")
     ?.addEventListener("click", addSkill);
 
-            
+            document
+.getElementById("communicationSkill")
+.addEventListener("input", function(){
+
+    document.getElementById(
+        "communicationValue"
+    ).textContent = this.value + "%";
+
+});
+document
+.getElementById("saveCommunicationBtn")
+?.addEventListener("click", async () => {
+
+    try{
+
+        const communicationSkill =
+        document.getElementById("communicationSkill").value;
+
+        const token = localStorage.getItem("token");
+
+        const response = await fetch(
+            "http://localhost:5000/api/student/profile/update",
+            {
+                method:"PUT",
+                headers:{
+                    "Content-Type":"application/json",
+                    Authorization:`Bearer ${token}`
+                },
+                body:JSON.stringify({
+                    communicationSkill
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if(data.success){
+            alert("Communication Skill Updated");
+        }
+
+    }catch(error){
+        console.error(error);
+    }
+
+});

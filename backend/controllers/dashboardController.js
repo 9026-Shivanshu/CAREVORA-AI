@@ -1,18 +1,36 @@
-const Resume = require("../models/resume");
+const ResumeBuilder = require("../models/resumeBuilder");
+const ATSAnalysis = require("../models/ATSAnalysis");
 const Interview = require("../models/interview");
 const User = require("../models/user");
 const Admin = require("../models/admin");
 const Contact = require("../models/contact");
 const ActivityLog = require("../models/ActivityLog");
 exports.getDashboardStats = async (req, res) => {
-
     try {
 
-        const resumes = await Resume.find({
+        // ==============================
+        // 1. Resume Builder Data
+        // ==============================
+
+        const resumes = await ResumeBuilder.find({
             user: req.user.id
         }).sort({
             createdAt: -1
         });
+
+        // ==============================
+        // 2. ATS Analysis Data
+        // ==============================
+
+        const atsAnalyses = await ATSAnalysis.find({
+            user: req.user.id
+        }).sort({
+            createdAt: -1
+        });
+
+        // ==============================
+        // 3. Interview Data
+        // ==============================
 
         const interviews = await Interview.find({
             user: req.user.id
@@ -20,40 +38,58 @@ exports.getDashboardStats = async (req, res) => {
             createdAt: -1
         });
 
-        const latestResume = resumes.length > 0 ? resumes[0] : null;
+        // ==============================
+        // Latest Records
+        // ==============================
 
-        const latestInterview = interviews.length > 0 ? interviews[0] : null;
+        const latestResume =
+            resumes.length > 0 ? resumes[0] : null;
+            
 
-        res.json({
+        const latestATS =
+            atsAnalyses.length > 0 ? atsAnalyses[0] : null;
+
+        const latestInterview =
+            interviews.length > 0 ? interviews[0] : null;
+
+        // ==============================
+        // Dashboard Response
+        // ==============================
+
+        res.status(200).json({
 
             success: true,
 
-           resumeScore: latestResume ? latestResume.atsScore : 0,
+            // Resume Builder Score
+            resumeScore: latestResume
+                ? Number(latestResume.resumeScore) || 0
+                : 0,
 
-            atsScore: latestResume ? latestResume.atsScore : 0,
+            // Latest ATS Analysis Score
+            atsScore: latestATS
+                ? Number(latestATS.atsScore) || 0
+                : 0,
 
-            interviewScore: latestInterview ? latestInterview.score : 0,
+            // Latest Mock Interview Score
+            interviewScore: latestInterview
+                ? Number(latestInterview.score) || 0
+                : 0,
 
+            // Total Mock Interviews
             totalInterviews: interviews.length
 
         });
 
-    }
+    } catch (error) {
 
-    catch (error) {
-
-        console.error(error);
+        console.error("Dashboard Stats Error:", error);
 
         res.status(500).json({
-
             success: false,
-
             message: error.message
-
         });
 
     }
-
 };
 // ======================================
 // Super Admin Dashboard Stats
@@ -78,7 +114,7 @@ const inactiveAdmins = await Admin.countDocuments({
     isActive: false
 });
 
-    const totalResumes = await Resume.countDocuments();
+    const totalResumes = await ResumeBuilder.countDocuments();
 
     const totalInterviews = await Interview.countDocuments();
 
@@ -166,7 +202,7 @@ exports.getDashboardAnalytics = async (req, res) => {
             },
         });
 
-        const newResumesThisMonth = await Resume.countDocuments({
+const newResumesThisMonth = await ResumeBuilder.countDocuments({
             createdAt: {
                 $gte: firstDayOfMonth,
             },
@@ -224,7 +260,7 @@ exports.getDashboardCharts = async (req, res) => {
             }
         ]);
 
-        const resumeData = await Resume.aggregate([
+       const resumeData = await ResumeBuilder.aggregate([
             {
                 $group: {
                     _id: {

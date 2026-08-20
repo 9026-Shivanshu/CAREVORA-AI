@@ -239,3 +239,64 @@ exports.getResumeHistory = async (req, res) => {
     }
 
 };
+// ==========================================
+// Delete Single Resume History
+// ==========================================
+
+exports.deleteResumeHistory = async (req, res) => {
+    try {
+
+        const resume = await Resume.findOneAndDelete({
+            _id: req.params.id,
+            user: req.user.id
+        });
+
+        if (!resume) {
+            return res.status(404).json({
+                success: false,
+                message: "Resume not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Resume deleted successfully"
+        });
+
+    } catch (error) {
+
+        console.error("Delete Resume History Error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to delete resume"
+        });
+    }
+};
+// ==========================================
+// Delete All Resume History
+// ==========================================
+
+exports.deleteAllResumeHistory = async (req, res) => {
+    try {
+
+        const result = await Resume.deleteMany({
+            user: req.user.id
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "All resume history deleted successfully",
+            deletedCount: result.deletedCount
+        });
+
+    } catch (error) {
+
+        console.error("Delete All Resume History Error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to clear resume history"
+        });
+    }
+};

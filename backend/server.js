@@ -18,6 +18,10 @@ const roadmapRoutes = require("./routes/roadmapRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const permissionRoutes = require("./routes/permissionRoutes");
+const atsRoutes = require('./routes/atsRoutes');
+const careerDNARoutes = require('./routes/careerDNARoutes');
+const priRoutes = require('./routes/priRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 connectDB();
 createDefaultAdmin();
 const app = express();
@@ -47,7 +51,11 @@ app.use("/api/roadmap", roadmapRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/permissions", permissionRoutes);
 app.use("/api/student", studentRoutes);
-app.use("/uploads", express.static("uploads"));
+app.use('/api/career-dna', careerDNARoutes);
+app.use('/api/pri', priRoutes);
+app.use('/api/profile', profileRoutes);
+// ADD THIS
+app.use('/api/ats', atsRoutes);
 app.get("/", (req, res) => {
 
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
