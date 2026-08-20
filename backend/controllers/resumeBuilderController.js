@@ -33,7 +33,12 @@ if (
     resumeScore += 15;
 
 resumeScore = Math.min(resumeScore, 100);
-
+console.log("BODY DATA:", req.body);
+const resume = await ResumeBuilder.create({
+    user: req.user.id,
+    ...req.body,
+    resumeScore
+});
         res.status(201).json({
             success: true,
             message: "Resume saved successfully.",
