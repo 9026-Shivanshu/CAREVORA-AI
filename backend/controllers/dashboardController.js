@@ -5,6 +5,7 @@ const User = require("../models/user");
 const Admin = require("../models/admin");
 const Contact = require("../models/contact");
 const ActivityLog = require("../models/ActivityLog");
+const ResumeHistory = require("../models/ResumeHistory");
 exports.getDashboardStats = async (req, res) => {
     try {
 
@@ -114,7 +115,7 @@ const inactiveAdmins = await Admin.countDocuments({
     isActive: false
 });
 
-    const totalResumes = await ResumeBuilder.countDocuments();
+const totalResumes = await ResumeHistory.countDocuments();
 
     const totalInterviews = await Interview.countDocuments();
 
@@ -259,22 +260,21 @@ exports.getDashboardCharts = async (req, res) => {
                 }
             }
         ]);
-
-       const resumeData = await ResumeBuilder.aggregate([
-            {
-                $group: {
-                    _id: {
-                        month: {$month: "$uploadedAt" }
-                    },
-                    count: { $sum: 1 }
-                }
-            },
-            {
-                $sort: {
-                    "_id.month": 1
-                }
-            }
-        ]);
+const resumeData = await ResumeHistory.aggregate([
+{
+    $group: {
+        _id: {
+            month: { $month: "$uploadedAt" }
+        },
+        count: { $sum: 1 }
+    }
+},
+{
+    $sort: {
+        "_id.month": 1
+    }
+}
+]);
 
         const interviewData = await Interview.aggregate([
             {
